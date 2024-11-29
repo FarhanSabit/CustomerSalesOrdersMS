@@ -1,3 +1,50 @@
+# Customer Sales Orders Management System
+
+This is a Customer Sales Orders Management System that allows for the management of customers and their sales orders. It includes functionality for creating, updating, and confirming orders, as well as managing customer information.
+
+## Table of Contents
+1. [Overview](#overview)
+2. [Technologies Used](#technologies-used)
+3. [Installation](#installation)
+4. [API Endpoints](#api-endpoints)
+5. [Testing with Postman](#testing-with-postman)
+6. [Assumptions & Limitations](#assumptions--limitations)
+7. [License](#license)
+
+---
+
+## Overview
+
+The system provides backend services to manage customers and their sales orders. The application uses Node.js with Express, Sequelize ORM for database interactions, and MySQL as the database.
+
+### Core Features:
+- **Customer Management**: Add, update, and manage customers.
+- **Sales Order Management**: Create, update, and confirm sales orders.
+- **Customer Validation**: Ensure that orders are only processed for customers that are allowed to place orders.
+
+---
+
+## Technologies Used
+- **Node.js**: JavaScript runtime environment.
+- **Express.js**: Web framework for building APIs.
+- **Sequelize**: ORM for interacting with MySQL.
+- **MySQL**: Relational database management system.
+- **Postman**: Used for API testing.
+
+---
+
+## Installation
+
+### Prerequisites:
+- [Node.js](https://nodejs.org) (v14 or higher)
+- [MySQL](https://www.mysql.com/downloads/) or a running instance of a MySQL database.
+
+### Steps:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/CustomerSalesOrdersMS.git
+   cd CustomerSalesOrdersMS
+
 # Bookshop Backend
 
 This is a backend service for a management system that manages customers (register, view, update) & sales/orders from the customers (create, view, update). It allows users to view, register, and update book details, as well as buy books while tracking stock availability. The project uses **Node.js** for the backend and **Redis** (with RedisJSON) for storing and managing book data and stock availability.
