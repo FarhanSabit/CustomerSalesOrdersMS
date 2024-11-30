@@ -46,7 +46,8 @@ The system provides backend services to manage customers and their sales orders.
 
 2. **Install dependencies:**:
 Create a .env file in the root of the project directory with the following content:
-3. **Set up environment variables:**
+
+4. **Set up environment variables:**
 Create a .env file in the root of the project directory with the following content:
 DB_HOST=localhost
 DB_USER=root
@@ -54,13 +55,14 @@ DB_PASSWORD=
 DB_NAME=customer_sales_orders
 PORT=3000
 
-4. **Run the database migrations:**:
+5. **Run the database migrations:**:
 If you are using Sequelize to manage database schema, run the migrations to create the necessary tables:
 npx sequelize-cli db:migrate
 
-5. **Start the server:**:
+6. **Start the server:**:
 npm start
 [The application will be accessible at http://localhost:3000.]
+
 
 # API Endpoints
 ## Customer Management:
@@ -86,6 +88,7 @@ npm start
 }
 
 **Response:** Returns the updated customer object.
+
 
 ## Order Management:
 ### 1. Create Order  (POST /api/Orders ):
@@ -115,12 +118,16 @@ npm start
 ### 5. Confirm Order (PATCH/api/Orders/:id/confirm):
 **Response:** Returns the updated order with status set to 'Confirmed'.
 
+---
+
 # Testing with Postman:
 ## To test the API with Postman, follow these steps:
 1. **Create a new request in Postman and set the method and URL as described in the API section.**
 2. **Set the request body (for POST/PUT requests) as shown in the examples above.**
     **Click Send to execute the request.**
 4. **View the response to check if the operation was successful.**
+
+---
 
 # Assumptions & Limitations
 ## Assumptions:
@@ -139,11 +146,14 @@ This project is licensed under the MIT License - see the [Overview](#overview) L
 ## Contributing:
 Feel free to fork the repository and contribute by submitting pull requests with any improvements or bug fixes. For major changes, please open an issue first to discuss what you would like to change.
 
-# Contact Information
-## Author: [Farhan Tahmid Sabit]
-## Email: [ftsabit@gmail.com]
-## GitHub: https://github.com/FarhanSabit
+---
 
+## Contact Information
+**Author: Farhan Tahmid Sabit**
+**Email: ftsabit@gmail.com**
+**GitHub: https://github.com/FarhanSabit**
+
+---
 
 ### **Explanation of the `README.md` Sections:**
 
