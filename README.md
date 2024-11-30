@@ -41,195 +41,118 @@ The system provides backend services to manage customers and their sales orders.
 
 ### Steps:
 1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/CustomerSalesOrdersMS.git
+   git clone https://github.com/FarhanSabit/CustomerSalesOrdersMS.git
    cd CustomerSalesOrdersMS
 
-# Bookshop Backend
-
-This is a backend service for a management system that manages customers (register, view, update) & sales/orders from the customers (create, view, update). It allows users to view, register, and update book details, as well as buy books while tracking stock availability. The project uses **Node.js** for the backend and **Redis** (with RedisJSON) for storing and managing book data and stock availability.
-
-## Features
-
-- **Book Registration**: Add new books with details like title, author, price, and stock.
-- **Book Read**: Users can search book.
-- **Stock Management**: Track the stock availability of books.
-- **Buy Books**: Users can purchase books, which reduces stock when successful.
-- **Redis for Data Storage**: Utilizes Redis in-memory database with RedisJSON for handling JSON data storage efficiently.
-
-## Technologies Used
-
-- **Node.js**: JavaScript runtime for building the backend service.
-- **Redis**: In-memory database used for storing book details and stock availability.
-- **RedisJSON**: Redis module for handling JSON data (book details).
-- **Express.js**: Web framework for building RESTful APIs.
-- **Docker** (Optional): For running Redis with RedisJSON in a containerized environment.
-
-## Prerequisites
-
-Before running this project, make sure you have the following installed:
-
-- **Node.js** (version 14 or later)
-- **Redis** (with RedisJSON module)
-- **Docker** (optional, if using Docker to run Redis)
-- **Postman** (optional, for API testing)
-
-## Installation
-
-1. **Clone the Repository**:
-
-   ```bash
-   git clone https://github.com/yourusername/bookshop-backend.git
-   cd bookshop-backend
-Install Dependencies:
-
-Install the required Node.js packages:
-
- ```bash
-npm install
- ```
-Set Up Environment Variables:
-
-Create a .env file in the root of the project and add the following variables:
-
-```bash
+2. **Install dependencies:**:
+Create a .env file in the root of the project directory with the following content:
+3. **Set up environment variables:**
+Create a .env file in the root of the project directory with the following content:
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=customer_sales_orders
 PORT=3000
-REDIS_HOST=localhost
-REDIS_PORT=6379
-JWT_SECRET_KEY=your_jwt_secret_key
-```
-Run Redis (with RedisJSON):
-If you're using Docker to run RedisJSON, you can start Redis with:
 
-```bash
-docker run -d --name redis -p 6379:6379 redislabs/rejson:latest
-```
-If you're using WSL or a native Redis installation, ensure Redis and RedisJSON are running on localhost:6379.
+4. **Run the database migrations:**:
+If you are using Sequelize to manage database schema, run the migrations to create the necessary tables:
+npx sequelize-cli db:migrate
 
-Start the Application:
-
-To start the application, run the following command:
-
-```bash
+5. **Start the server:**:
 npm start
-```
-The backend service should now be running on http://localhost:3000.
+[The application will be accessible at http://localhost:3000.]
 
-API Endpoints
-1. Get All Books
-Endpoint: GET /api/books
-
-Description: Fetch a list of all books available in the store.
-
-Response:
-
-```json
-[
-  {
-    "id": 1,
-    "title": "Book Title",
-    "author": "Author Name",
-    "price": 19.99,
-    "stock": 100
-  }
-]
-```
-2. Get Book by ID
-Endpoint: GET /api/books/:id
-
-Description: Fetch a book by its ID.
-
-Parameters:
-
-id: Book ID (integer)
-Response:
-
-```json
+# API Endpoints
+## Customer Management:
+### 1. Create Customer (POST /api/customers):
+**Body:**
 {
-  "id": 1,
-  "title": "Book Title",
-  "author": "Author Name",
-  "price": 19.99,
-  "stock": 100
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "isAllowedToOrder": true
 }
-```
+**Response:** Returns the created customer object.
+
+### 2. Get All Customers (GET /api/customers):
+**Response:** Returns an array of all customers.
+
+### 3. Get Customer by ID (GET /api/customers/:id):
+**Response:** Returns customer details by ID.
+
+### 4. Update Customer Status (PATCH /api/customers/:id/status):
+**Body:**
+{
+  "isAllowedToOrder": false
+}
+
+**Response:** Returns the updated customer object.
+
+## Order Management:
+### 1. Create Order  (POST /api/Orders ):
+**Body:**
+{
+  "customerId": 1,
+  "items": [{"product": "Product 1", "quantity": 2, "price": 50}],
+  "totalAmount": 100
+}
+**Response:** Returns the created order object.
+
+### 2. Get All Orders  (GET /api/Orders):
+**Response:** Returns an array of all Orders.
+
+### 3. Get Order  by ID (GET /api/Orders/:id):
+**Response:** Returns Orders details by ID.
+
+### 4. Update Order (PATCH /api/Orders/:id):
+**Body:**
+{
+  "items": [{"product": "Updated Product", "quantity": 3, "price": 75}],
+  "totalAmount": 225
+}
+
+**Response:** Returns the updated order object.
+
+### 5. Confirm Order (PATCH/api/Orders/:id/confirm):
+**Response:** Returns the updated order with status set to 'Confirmed'.
+
+# Testing with Postman:
+## To test the API with Postman, follow these steps:
+1. **Create a new request in Postman and set the method and URL as described in the API section.**
+2. **Set the request body (for POST/PUT requests) as shown in the examples above.**
+    **Click Send to execute the request.**
+4. **View the response to check if the operation was successful.**
+
+# Assumptions & Limitations
+## Assumptions:
+1. The customer must be allowed to place an order (isAllowedToOrder must be true) in order to create a new order.
+2. The order cannot be confirmed if the customer is disallowed from placing orders.
+
+## Limitations:
+1. The application currently only supports basic CRUD operations for customers and orders.
+2. No advanced authentication or authorization has been implemented.
+Error handling is basic and does not cover all edge cases (e.g., validation errors are not always specific).
 3. Register a New Book
-Endpoint: POST /api/books
 
-Description: Add a new book to the store.
+## License:
+This project is licensed under the MIT License - see the [Overview](#overview) LICENSE file for details.
 
-Request Body:
+## Contributing:
+Feel free to fork the repository and contribute by submitting pull requests with any improvements or bug fixes. For major changes, please open an issue first to discuss what you would like to change.
 
-```json
-{
-  "title": "New Book Title",
-  "author": "New Author",
-  "price": 25.99,
-  "stock": 50
-}
-```
-Response:
+# Contact Information
+## Author: [Farhan Tahmid Sabit]
+## Email: [ftsabit@gmail.com]
+## GitHub: https://github.com/FarhanSabit
 
-```json
-{
-  "message": "Book registered successfully!"
-}
-```
-4. Update Book Details
-Endpoint: PUT /api/books/:id
 
-Description: Update the details of a book.
+### **Explanation of the `README.md` Sections:**
 
-Parameters:
-
-id: Book ID (integer)
-Request Body:
-
-```json
-{
-  "title": "Updated Book Title",
-  "author": "Updated Author",
-  "price": 29.99,
-  "stock": 45
-}
-```
-Response:
-
-```json
-{
-  "message": "Book details updated successfully!"
-}
-```
-5. Buy a Book
-Endpoint: POST /api/books/buy/:id
-
-Description: Buy a book and reduce its stock by 1.
-
-Parameters:
-
-id: Book ID (integer)
-Response:
-
-```json
-{
-  "message": "Book purchased successfully!",
-  "remainingStock": 49
-}
-```
-Testing the API
-You can test the API using Postman or any other API testing tool:
-```
-GET /api/books to retrieve all books.
-GET /api/books/:id to retrieve a specific book by ID.
-POST /api/books to add a new book.
-PUT /api/books/:id to update book details.
-POST /api/books/buy/:id to simulate buying a book.
-```
-Error Handling
-If an error occurs during an API request, you will receive a JSON response with an error field:
-
-```json
-{
-  "error": "Error message"
-}
-```
+- **Overview**: Describes the purpose of the application and its core features.
+- **Technologies Used**: Lists the key technologies and frameworks used in the application.
+- **Installation**: Step-by-step instructions for setting up and running the application locally.
+- **API Endpoints**: Lists the routes, HTTP methods, and example request/response formats.
+- **Testing with Postman**: Provides instructions on how to test the API using Postman.
+- **Assumptions & Limitations**: Documents key assumptions made during the design and implementation and any limitations in the current version.
+- **License**: Specifies the project's license.
+- **Contributing**: Information on how others can contribute to the project.
+- **Contact Information**: Contact details for the project author.
